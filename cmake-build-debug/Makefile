@@ -123,6 +123,33 @@ Server/fast:
 	$(MAKE) -f CMakeFiles/Server.dir/build.make CMakeFiles/Server.dir/build
 .PHONY : Server/fast
 
+Utils.o: Utils.c.o
+
+.PHONY : Utils.o
+
+# target to build an object file
+Utils.c.o:
+	$(MAKE) -f CMakeFiles/Server.dir/build.make CMakeFiles/Server.dir/Utils.c.o
+.PHONY : Utils.c.o
+
+Utils.i: Utils.c.i
+
+.PHONY : Utils.i
+
+# target to preprocess a source file
+Utils.c.i:
+	$(MAKE) -f CMakeFiles/Server.dir/build.make CMakeFiles/Server.dir/Utils.c.i
+.PHONY : Utils.c.i
+
+Utils.s: Utils.c.s
+
+.PHONY : Utils.s
+
+# target to generate assembly for a file
+Utils.c.s:
+	$(MAKE) -f CMakeFiles/Server.dir/build.make CMakeFiles/Server.dir/Utils.c.s
+.PHONY : Utils.c.s
+
 main.o: main.c.o
 
 .PHONY : main.o
@@ -159,6 +186,9 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... Server"
 	@echo "... edit_cache"
+	@echo "... Utils.o"
+	@echo "... Utils.i"
+	@echo "... Utils.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"

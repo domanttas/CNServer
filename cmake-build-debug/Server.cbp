@@ -78,6 +78,12 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="/home/domantas/CN/Server/Utils.c">
+			<Option target="Server"/>
+		</Unit>
+		<Unit filename="/home/domantas/CN/Server/Utils.h">
+			<Option target="Server"/>
+		</Unit>
 		<Unit filename="/home/domantas/CN/Server/main.c">
 			<Option target="Server"/>
 		</Unit>
