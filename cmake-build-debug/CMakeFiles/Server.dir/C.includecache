@@ -6,7 +6,33 @@
 
 #IncludeRegexTransform: 
 
+/home/domantas/CN/Server/Utils.c
+Utils.h
+/home/domantas/CN/Server/Utils.h
+
+/home/domantas/CN/Server/Utils.h
+stdio.h
+-
+stdlib.h
+-
+string.h
+-
+unistd.h
+-
+sys/types.h
+-
+sys/socket.h
+-
+netinet/in.h
+-
+arpa/inet.h
+-
+netdb.h
+-
+
 /home/domantas/CN/Server/main.c
 stdio.h
 -
+Utils.h
+/home/domantas/CN/Server/Utils.h
 
