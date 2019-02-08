@@ -6,10 +6,6 @@
 
 #IncludeRegexTransform: 
 
-/home/domantas/CN/Server/Utils.c
-Utils.h
-/home/domantas/CN/Server/Utils.h
-
 /home/domantas/CN/Server/Utils.h
 stdio.h
 -

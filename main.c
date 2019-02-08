@@ -99,7 +99,70 @@ int main() {
     fdmax = listener;
 
     for(;;) {
+        //Copying
+        read_fds = master;
 
+        if (select(fdmax + 1, &read_fds, NULL, NULL, NULL) == -1) {
+            perror("Error in select");
+            exit(1);
+        }
+
+        //Looping through connections
+        for (i = 0; i <= fdmax; i++) {
+            if (FD_ISSET(i, &read_fds)) {
+                //There's connection
+                if (i == listener) {
+                    //Handling connection
+                    addrlen = sizeof remoteaddr;
+                    newfd = accept(listener, (struct sockaddr *)&remoteaddr, &addrlen);
+
+                    if (newfd == -1) {
+                        perror("Error in accepting connection");
+                    } else {
+                        //Adding to master list
+                        FD_SET(newfd, &master);
+
+                        if (newfd > fdmax) {
+                            //Keeping maximum descriptor
+                            fdmax = newfd;
+                        }
+                        printf("Server: new connection from %s on " "socket %d\n",
+                                inet_ntop(remoteaddr.ss_family,
+                                        get_in_addr((struct sockaddr*)&remoteaddr),
+                                                remoteIP, INET6_ADDRSTRLEN),
+                                                newfd);
+
+                    }
+                } else {
+                    //Handling data
+                    if ((nbytes = recv(i, buffer, sizeof buffer, 0)) <= 0) {
+                        //Some error
+                        if (nbytes == 0) {
+                            //Connection was closed
+                            printf("Server: socket %d lost connection\n", i);
+                        } else {
+                            perror("Error while receiving");
+                        }
+                        close(i);
+                        //Removing it
+                        FD_CLR(i, &master);
+                    } else {
+                        //Data received
+                        for (j = 0; j <= fdmax; j++) {
+                            //Sending data to every client
+                            if (FD_ISSET(j, &master)) {
+                                //Except listener and server
+                                if (j != listener && j != 1) {
+                                    if (send(j, buffer, nbytes, 0) == -1) {
+                                        perror("Error while sending data out");
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 
     return 0;
