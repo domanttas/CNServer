@@ -27,6 +27,16 @@ int main() {
     char buffer[256];
     int nbytes;
 
+    char const_buffer[8];
+
+    const_buffer[0] = 'S';
+    const_buffer[1] = 'o';
+    const_buffer[2] = 'c';
+    const_buffer[3] = 'k';
+    const_buffer[4] = 'e';
+    const_buffer[5] = 't';
+    const_buffer[7] = ' ';
+
     char remoteIP[INET6_ADDRSTRLEN];
 
     //Setsockopt()
@@ -152,7 +162,11 @@ int main() {
                             //Sending data to every client
                             if (FD_ISSET(j, &master)) {
                                 //Except listener and server
-                                if (j != listener && j != 1) {
+                                if (j != listener && j != 1 && j != i) {
+                                    const_buffer[6] = i + '0';
+                                    if (send(j, const_buffer, sizeof const_buffer, 0) == -1) {
+                                        perror("Error while sending data out");
+                                    }
                                     if (send(j, buffer, nbytes, 0) == -1) {
                                         perror("Error while sending data out");
                                     }
