@@ -64,7 +64,7 @@ int main() {
     hints.ai_flags = AI_PASSIVE;
 
     if ((rv = getaddrinfo(NULL, PORT, &hints, &ai)) != 0) {
-        fprintf(stderr, "Server: %s\n", gai_strerror(rv));
+        printf(stderr, "Server: %s\n", gai_strerror(rv));
         exit(1);
     }
 
@@ -87,7 +87,7 @@ int main() {
 
     //Failed to bind
     if (p == NULL) {
-        fprintf(stderr, "Server: failed to bind\n");
+        printf(stderr, "Server: failed to bind\n");
         exit(1);
     }
 
@@ -98,7 +98,7 @@ int main() {
      */
 
     if (listen(listener, 5) < 0) {
-        perror("Error while listening\n");
+        printf("Error while listening\n");
         exit(1);
     }
 
@@ -113,7 +113,7 @@ int main() {
         read_fds = master;
 
         if (select(fdmax + 1, &read_fds, NULL, NULL, NULL) == -1) {
-            perror("Error in select");
+            printf("Error in select");
             exit(1);
         }
 
@@ -127,7 +127,7 @@ int main() {
                     newfd = accept(listener, (struct sockaddr *)&remoteaddr, &addrlen);
 
                     if (newfd == -1) {
-                        perror("Error in accepting connection");
+                        printf("Error in accepting connection");
                     } else {
                         //Adding to master list
                         FD_SET(newfd, &master);
@@ -151,7 +151,7 @@ int main() {
                             //Connection was closed
                             printf("Server: socket %d lost connection\n", i);
                         } else {
-                            perror("Error while receiving");
+                            printf("Error while receiving");
                         }
                         close(i);
                         //Removing it
@@ -165,10 +165,10 @@ int main() {
                                 if (j != listener && j != 1 && j != i) {
                                     const_buffer[6] = i + '0';
                                     if (send(j, const_buffer, sizeof const_buffer, 0) == -1) {
-                                        perror("Error while sending data out");
+                                        printf("Error while sending data out");
                                     }
                                     if (send(j, buffer, nbytes, 0) == -1) {
-                                        perror("Error while sending data out");
+                                        printf("Error while sending data out");
                                     }
                                 }
                             }
