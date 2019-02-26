@@ -163,12 +163,9 @@ int main() {
                             if (FD_ISSET(j, &master)) {
                                 //Same client
                                 if (j == i) {
-                                    const_buffer[6] = i + '0';
-                                    if (send(j, const_buffer, sizeof const_buffer, 0) == -1) {
-                                        printf("Error while sending data out");
-                                    }
+                                    int error;
+                                    int answer = calculate(buffer, &error);
 
-                                    int answer = calculate(buffer);
                                     memset(buffer, 0, sizeof buffer);
                                     sprintf(buffer, "%d", answer);
 

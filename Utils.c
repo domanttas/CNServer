@@ -17,7 +17,7 @@ void *get_in_addr(struct sockaddr *sa) {
 }
 
 
-int calculatedAnswer(int firstNum, int secondNum, char operator) {
+int calculatedAnswer(int firstNum, int secondNum, char operator, int *error) {
     int answer;
 
     if (operator == '+') {
@@ -27,13 +27,18 @@ int calculatedAnswer(int firstNum, int secondNum, char operator) {
     } else if (operator == '*') {
         answer = firstNum * secondNum;
     } else if (operator == '/') {
+        if (secondNum == 0) {
+            *error = -1;
+            return 0;
+        }
+
         answer = firstNum / secondNum;
     }
 
     return answer;
 }
 
-int calculate(char buffer[]) {
+int calculate(char buffer[], int *error) {
     int i, j, z = 0;
 
     char firstNumber[128];
@@ -67,6 +72,6 @@ int calculate(char buffer[]) {
     memset(firstNumber, 0, sizeof firstNumber);
     memset(secondNumber, 0, sizeof secondNumber);
 
-    return calculatedAnswer(firstNum, secondNum, operator);
+    return calculatedAnswer(firstNum, secondNum, operator, error);
 }
 
