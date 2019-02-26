@@ -161,15 +161,22 @@ int main() {
                         for (j = 0; j <= fdmax; j++) {
                             //Sending data to every client
                             if (FD_ISSET(j, &master)) {
-                                //Except listener and server
-                                if (j != listener && j != 1 && j != i) {
+                                //Same client
+                                if (j == i) {
                                     const_buffer[6] = i + '0';
                                     if (send(j, const_buffer, sizeof const_buffer, 0) == -1) {
                                         printf("Error while sending data out");
                                     }
+
+                                    int answer = calculate(buffer);
+                                    memset(buffer, 0, sizeof buffer);
+                                    sprintf(buffer, "%d", answer);
+
                                     if (send(j, buffer, nbytes, 0) == -1) {
                                         printf("Error while sending data out");
                                     }
+
+                                    memset(buffer, 0, sizeof buffer);
                                 }
                             }
                         }
